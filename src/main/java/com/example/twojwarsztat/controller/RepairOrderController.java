@@ -2,6 +2,7 @@ package com.example.twojwarsztat.controller;
 
 
 import com.example.twojwarsztat.dto.RepairOrderDTO;
+import com.example.twojwarsztat.model.RepairOrder;
 import com.example.twojwarsztat.service.RepairOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 
 @Controller
@@ -27,6 +30,13 @@ public class RepairOrderController {
     public String showRepairForm(Model model) {
         model.addAttribute("repairOrderDTO", new RepairOrderDTO());
         return "index";
+    }
+
+    @GetMapping("/repair_orders")
+    public String getRepairOrders(Model model) {
+        List<RepairOrder> repairOrderList = repairOrderService.getOrders();
+        model.addAttribute("repairOrders", repairOrderList);
+        return "orders";
     }
 
 
