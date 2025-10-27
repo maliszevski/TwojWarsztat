@@ -1,0 +1,45 @@
+/*
+ * W tym pliku umieszczamy wszystkie własne style.
+ * Plik musi znajdować się w tym samym folderze co index.html,
+ * aby połączenie działało poprawnie.
+ */
+
+body {
+    /* Jasnoszary kolor tła, domyślny Bootstrapa, ale jawnie ustawiony */
+    background-color: #f8f9fa; 
+    /* Zapewnia, że body zajmuje całą wysokość widoku */
+    min-height: 100vh; 
+    /* Użycie Flexboxa dla łatwego umieszczenia stopki na dole */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styl dla nagłówka */
+.header-bg {
+    /* Ciemne tło dla nagłówka */
+    background-color: #343a40; 
+    color: white;
+    padding: 1rem 0;
+    /* Lekki cień, żeby odseparować od treści */
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+/* Styl dla głównej zawartości strony */
+.main-content {
+    /* Sprawia, że główna treść zajmuje dostępną przestrzeń,
+       wypychając stopkę na dół (dzięki display: flex w body) */
+    flex-grow: 1; 
+    padding: 2rem 0;
+}
+
+/* Styl dla marginesu między przyciskami w nawigacji */
+.btn-custom-margin {
+    margin-right: 10px; 
+}
+
+/* Możesz też nadpisać style Bootstrapa w tym pliku, np.
+.btn-primary {
+    background-color: darkgreen;
+    border-color: darkgreen;
+}
+*/

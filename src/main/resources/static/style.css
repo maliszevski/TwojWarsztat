@@ -1,0 +1,40 @@
+/* Plik style.css */
+
+/* Ustawienia dla głównego kontenera body */
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Styl dla nagłówka */
+.header-bg {
+    background-color: #343a40; /* Ciemne tło dla nagłówka */
+    color: white;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
+
+/* Styl dla głównej zawartości strony */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem 0;
+}
+
+/* Styl dla marginesu między przyciskami w nawigacji */
+.btn-custom-margin {
+    margin-right: 10px;
+}
+
+/* KLUCZOWY STYL DLA FORMULARZY:
+   Wyrównuje wysokość kolumn w rzędzie, dzięki czemu formularze
+   z klasą h-100 rozciągną się do równej wysokości. */
+.row {
+    align-items: stretch;
+}
+
+/* Dodatkowa kontrola nad polem textarea, aby wypełniło przestrzeń w kolumnie "Zlecenie naprawy" */
+.flex-grow-1 > textarea {
+    flex-grow: 1;
+}
