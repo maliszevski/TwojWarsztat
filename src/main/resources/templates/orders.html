@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista zleceń napraw</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header-bg">
+    <div class="container">
+        <h1 class="text-center mb-0">Twój warsztat</h1>
+        <nav class="d-flex justify-content-center mt-3">
+            <a href="/" class="btn btn-primary btn-custom-margin">Strona Główna</a>
+            <a href="/orders" class="btn btn-secondary btn-custom-margin">Lista zleceń</a>
+            <a href="/customers" class="btn btn-primary btn-custom-margin">Lista klientów</a>
+            <a href="/vehicles" class="btn btn-primary">Lista pojazdów</a>
+        </nav>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="container">
+
+        <h2 class="text-primary mb-4 text-center">Lista zleceń napraw</h2>
+
+        <div class="p-3 border rounded shadow-sm bg-white">
+
+            <div th:if="${repairOrders.isEmpty()}" class="alert alert-info text-center">
+                Brak aktualnych zleceń w systemie.
+            </div>
+
+            <table th:unless="${repairOrders.isEmpty()}" class="table table-striped table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>ID Zlecenia</th>
+                    <th>Klient</th>
+                    <th>Pojazd (Marka/Model)</th>
+                    <th>Rejestracja</th>
+                    <th>Opis usterki</th>
+                    <th>Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="repairOrder : ${repairOrders}">
+                    <td th:text="${repairOrder.id}">123</td>
+                    <td th:text="${repairOrder.vehicle.customer.name + ' ' + repairOrder.vehicle.customer.surname}">Jan Kowalski</td>
+                    <td th:text="${repairOrder.vehicle.brand + ' ' + repairOrder.vehicle.model}">Skoda Octavia</td>
+                    <td th:text="${repairOrder.vehicle.registrationNumber}">KR12345</td>
+                    <td th:text="${repairOrder.description}">Wymiana oleju i filtrów</td>
+                    <td>
+                        <a th:href="@{/orders/details/{id}(id=${repairOrder.id})}" class="btn btn-sm btn-info">Szczegóły</a>
+                        <a th:href="@{/orders/edit/{id}(id=${repairOrder.id})}" class="btn btn-sm btn-warning">Edytuj</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!--
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-outline-primary">Powrót do nowego zlecenia</a>
+        </div>
+        -->
+    </div>
+</main>
+
+<footer class="bg-light text-center text-lg-start mt-auto py-3">
+    <div class="container">
+        <p class="text-muted mb-0">&copy; 2024 Twój warsztat. Wszelkie prawa zastrzeżone.</p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
