@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -21,9 +23,10 @@ public class RepairOrderController {
 
 
     @PostMapping("/create-repair-order")
-    public String createRepairOrder(@ModelAttribute RepairOrderDTO repairOrderDTO, Model model) {
+    public String createRepairOrder(@ModelAttribute RepairOrderDTO repairOrderDTO, RedirectAttributes redirectAttributes) {
         repairOrderService.createRepairOrder(repairOrderDTO);
-        return "redirect:/success";
+        redirectAttributes.addFlashAttribute("successMessage", "Zlecenie naprawy utworzone pomyślnie.");
+        return "redirect:/";
     }
 
     @GetMapping("/new-order")
@@ -33,9 +36,10 @@ public class RepairOrderController {
     }
 
     @GetMapping("/repair_orders")
-    public String getRepairOrders(Model model) {
-        List<RepairOrder> repairOrderList = repairOrderService.getOrders();
+    public String getRepairOrders(@RequestParam(name ="searchTerm", required = false) String searchTerm, Model model) {
+        List<RepairOrder> repairOrderList = repairOrderService.searchTerm(searchTerm);
         model.addAttribute("repairOrders", repairOrderList);
+        model.addAttribute("searchTerm", searchTerm);
         return "orders";
     }
 

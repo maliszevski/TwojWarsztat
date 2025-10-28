@@ -23,7 +23,7 @@ public class Customer {
     @Column(length = 100)
     private String address;
 
-    @Column(length= 30)
+    @Column(length= 200)
     private String email;
 
     @Column(length = 50)

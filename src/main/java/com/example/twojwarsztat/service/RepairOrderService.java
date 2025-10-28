@@ -56,4 +56,15 @@ public class RepairOrderService {
         return repairOrderRepository.findAll();
     }
 
+    public List<RepairOrder> searchTerm(String searchTerm){
+        if (searchTerm ==  null || searchTerm.isEmpty()){
+            return this.getOrders();
+        } else {
+            return repairOrderRepository.findByVehicleCustomerNameContainingIgnoreCaseOrVehicleCustomerSurnameContainingIgnoreCaseOrVehicleRegistrationNumberContainingIgnoreCase(
+                    searchTerm,searchTerm,searchTerm
+            );
+        }
+
+    }
+
 }

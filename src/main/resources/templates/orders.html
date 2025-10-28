@@ -14,7 +14,7 @@
         <h1 class="text-center mb-0">Twój warsztat</h1>
         <nav class="d-flex justify-content-center mt-3">
             <a href="/" class="btn btn-primary btn-custom-margin">Strona Główna</a>
-            <a href="/orders" class="btn btn-secondary btn-custom-margin">Lista zleceń</a>
+            <a href="/repair_orders" class="btn btn-secondary btn-custom-margin">Lista zleceń</a>
             <a href="/customers" class="btn btn-primary btn-custom-margin">Lista klientów</a>
             <a href="/vehicles" class="btn btn-primary">Lista pojazdów</a>
         </nav>
@@ -26,6 +26,19 @@
 
         <h2 class="text-primary mb-4 text-center">Lista zleceń napraw</h2>
 
+        <form method="GET" th:action="@{/repair_orders}" class="mb-4 d-flex">
+            <div class="input-group">
+                <input
+                        type="text"
+                        name="searchTerm"
+                        class="form-control"
+                        placeholder="Wyszukaj po imieniu, nazwisku lub rejestracji..."
+                        th:value="${searchTerm}"
+                />
+                <button type="submit" class="btn btn-primary ms-2">Szukaj</button>
+                <a th:href="@{/orders}" class="btn btn-outline-secondary ms-2">Resetuj</a>
+            </div>
+        </form>
         <div class="p-3 border rounded shadow-sm bg-white">
 
             <div th:if="${repairOrders.isEmpty()}" class="alert alert-info text-center">
@@ -59,11 +72,6 @@
             </table>
         </div>
 
-        <!--
-        <div class="text-center mt-4">
-            <a href="/" class="btn btn-outline-primary">Powrót do nowego zlecenia</a>
-        </div>
-        -->
     </div>
 </main>
 
