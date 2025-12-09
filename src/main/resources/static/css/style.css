@@ -1,0 +1,60 @@
+/* Zapewnienie, że tabela zajmuje 100% dostępnego miejsca */
+.table {
+    width: 100%;
+    /* Opcjonalnie: Użyj table-layout: fixed, jeśli chcesz, aby wszystkie kolumny miały równą szerokość
+       i były zarządzane przez CSS, a nie zawartość. Jeśli to nie pomoże, usuń ten wiersz. */
+    table-layout: fixed;
+}
+
+/* 1. Kompresja Komórki 'Akcje' (Ostatnia kolumna) */
+.table th:last-child,
+.table td:last-child {
+    width: 150px; /* Ustal stałą szerokość wystarczającą na trzy przyciski */
+    min-width: 150px;
+    padding: 0.25rem; /* Zmniejsz padding w komórce */
+    white-space: nowrap; /* Zapobiega łamaniu przycisków na dwie linie, co jest pożądane */
+    text-align: center; /* Wyśrodkuj przyciski */
+}
+
+/* 2. Kompresja Przycisków i Marginesów */
+.table td:last-child .btn-sm {
+    /* Ustaw minimalne odstępy między przyciskami */
+    margin: 1px;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.75rem; /* Opcjonalnie: Zmniejsz czcionkę dla lepszego upakowania */
+    line-height: 1.2;
+}
+
+/* 3. Wymuś Łamanie Długiego Tekstu (dla kolumn 'Imię' i 'Opis') */
+/* Kolumny 2 (Imię i nazwisko), 6 (Opis) */
+.table td:nth-child(2),
+.table td:nth-child(6) {
+    max-width: 200px;
+    word-wrap: break-word; /* Wymuś łamanie długich słów */
+    white-space: normal;
+}
+
+/* Ustaw stałą szerokość dla małych kolumn (np. ID i Status) */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 5%; /* ID */
+}
+
+.table th:nth-child(7),
+.table td:nth-child(7) {
+    width: 10%; /* Status */
+}
+
+/* Plik: style.css */
+
+.large-search-input {
+    /* Ustaw dowolną szerokość, która Ci odpowiada */
+    width: 350px; !important;
+}
+
+/* Możesz użyć media query, aby szerokość była stosowana tylko na dużych ekranach */
+@media (min-width: 992px) {
+    .large-search-input {
+        width: 350px; /* Przykładowa szerokość */ !important;
+    }
+}

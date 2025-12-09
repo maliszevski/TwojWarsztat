@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Szczegóły zlecenia serwisowego</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/}">Twój Warsztat</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/customers}">Klienci</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/vehicles}">Pojazdy</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/repair_orders}">Zlecenia napraw</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card p-4 shadow-lg">
+                <div class="card-header bg-white p-4 border-bottom shadow-sm">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-gear-fill text-primary display-6 me-3"></i>
+
+                        <div>
+                            <h1 class="mb-0 fs-3 text-dark">
+                                Zlecenie naprawy nr:
+                                <span th:text="${repairOrderDetails.id}">[ID]</span>
+                            </h1>
+                            <p class="text-muted mb-0">Szczegóły dotyczące wybranego zlecenia</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+                        <h4 class="mb-0">
+                            Status:
+                            <span class="badge"
+                                  th:classappend="${repairOrderDetails.repairOrderStatus.name() == 'OPEN' ? 'bg-success' : 'bg-secondary'}"
+                                  th:text="${repairOrderDetails.repairOrderStatus.name() == 'OPEN' ? 'OTWARTE' : 'ZAMKNIĘTE'}">
+                                [STATUS]
+                            </span>
+                        </h4>
+                        <div>
+                            <a th:href="@{repair_orders/export/{id}(id=${repairOrderDetails.id})}"
+                               class="btn btn-sm btn-info">
+                                <i class="bi bi-file-earmark-pdf me-1"></i>Eksportuj PDF
+                            </a>
+                            <a th:href="@{/repair_orders/close/{id}(id=${repairOrderDetails.id})}"
+                               class="btn btn-sm btn-danger me-2"
+                               th:if="${repairOrderDetails.repairOrderStatus.name() == 'OPEN'}">
+                                <i class="bi bi-x-circle me-1"></i>Zamknij zlecenie
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 border-end">
+                            <h4 class="text-primary mb-3"><i class="bi bi-person-fill me-2"></i>Dane klienta</h4>
+                            <dl class="row">
+                                <dt class="col-sm-4">Imię i nazwisko:</dt>
+                                <dd class="col-sm-8"
+                                    th:text="${repairOrderDetails.customer.name + ' ' + repairOrderDetails.customer.surname}"></dd>
+
+                                <dt class="col-sm-4">Telefon:</dt>
+                                <dd class="col-sm-8" th:text="${repairOrderDetails.customer.phoneNumber}"></dd>
+
+                                <dt class="col-sm-4">Email:</dt>
+                                <dd class="col-sm-8" th:text="${repairOrderDetails.customer.email}"></dd>
+
+                                <dt class="col-sm-4" th:if="${repairOrderDetails.customer.nipNumber}">NIP:</dt>
+                                <dd class="col-sm-8" th:if="${repairOrderDetails.customer.nipNumber}"
+                                    th:text="${repairOrderDetails.customer.nipNumber}"></dd>
+
+                                <dt class="col-sm-4">Adres:</dt>
+                                <dd class="col-sm-8" th:text="${repairOrderDetails.customer.address}"></dd>
+                            </dl>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4 class="text-primary mb-3"><i class="bi bi-car-front-fill me-2"></i>Dane pojazdu</h4>
+                            <dl class="row">
+                                <dt class="col-sm-5">Marka/Model:</dt>
+                                <dd class="col-sm-7"
+                                    th:text="${repairOrderDetails.vehicle.brand + ' ' + repairOrderDetails.vehicle.model}"></dd>
+
+                                <dt class="col-sm-5">Nr rejestracyjny:</dt>
+                                <dd class="col-sm-7" th:text="${repairOrderDetails.vehicle.registrationNumber}"></dd>
+
+                                <dt class="col-sm-5">VIN:</dt>
+                                <dd class="col-sm-7" th:text="${repairOrderDetails.vehicle.vinNumber}"></dd>
+
+                            </dl>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="row">
+                        <div class="col-12">
+                            <h4 class="text-primary mb-3"><i class="bi bi-list-columns-reverse me-2"></i>Informacje o
+                                zleceniu</h4>
+                            <dl class="row">
+                                <dt class="col-sm-3">Data utworzenia:</dt>
+                                <dd class="col-sm-9">
+                                    <span th:text="${#temporals.format(repairOrderDetails.repairOrderDate, 'yyyy-MM-dd')}"></span>
+                                    godz. <span
+                                        th:text="${#temporals.format(repairOrderDetails.repairOrderTime, 'HH:mm')}"></span>
+                                </dd>
+
+                                <dt class="col-sm-3">Opis naprawy:</dt>
+                                <dd class="col-sm-9">
+                                    <p class="border p-3 rounded bg-light" th:text="${repairOrderDetails.description}">
+                                        Brak opisu zlecenia.</p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-center">
+                    <a th:href="@{/}" class="btn btn-secondary btn-lg">
+                        <i class="bi bi-arrow-left me-2"></i>Powrót do listy zleceń
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center p-3 mt-5">
+    <p class="m-0">© 2025 Twój Warsztat – System zarządzania warsztatem.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
